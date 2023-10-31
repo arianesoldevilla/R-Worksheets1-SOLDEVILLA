@@ -55,9 +55,10 @@ print(new_order_data)
 ```
 #5
 ``` {r number5}
+library(readr)
 file_path <- "import_march.csv"
 data <- read_csv(file_path)
-View(data)
+head("import.march.csv")
 ```
 
 #6.
@@ -110,6 +111,8 @@ students$Average <- (students$Grade1 + students$Grade2 + students$Grade3 + stude
 
 for (i in 1:nrow(students)) {
   average <- (students$Grade1[i] + students$Grade2[i] + students$Grade3[i] + students$Grade4[i]) / 4
+  count <- 0
+  total_average <- 0
   if (students$Grade4[i] > 90) {
     cat(students$Name[i], "'s average grade this semester is", average, ".\n")
     total_average <- total_average + average
