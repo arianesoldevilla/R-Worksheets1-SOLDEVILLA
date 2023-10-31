@@ -55,10 +55,9 @@ print(new_order_data)
 ```
 #5
 ``` {r number5}
-library(readr)
-file_path <- "import_march.csv"
-data <- read_csv(file_path)
-head("import.march.csv")
+student_table <- read.table(file = 'import_march.csv', header = TRUE, sep = ',')
+student_table
+
 ```
 
 #6.
