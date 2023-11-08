@@ -1,0 +1,56 @@
+---
+title: "RWorksheet_Soldevilla#4b.Rmd"
+author: "Ariane Soldevilla"
+date: "2023-11-08"
+output: pdf_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r 1}
+vectorA <- c(1, 2, 3, 4, 5,)
+matrixA <- matrix(0, nrow = 5, ncol = 5)
+
+for(i in 1:5) {
+  for (j in 1:5){
+   matrixA[i,j] <- abs(vectorA[i]-
+   vectorA[j])
+}
+}
+
+matrixA
+```
+```{r 2}
+num_rows <- 5
+
+for(i in 1:num_rows){
+  for(j in 1:i){
+    cat("*")
+  }
+  cat("\n")
+}
+```
+
+```{r 3}
+n <- as.numeric(readline("Enter the starting number for the Fibonacci sequence:"))
+
+a <- n
+b <- n
+
+cat(a,"")
+
+repeat{
+  c <- a+b
+  if(c > 500){
+    break
+  }
+  cat(c,"")
+  a <- b
+  b <- c
+}
+cat("\n")
+```
+  }
+}
