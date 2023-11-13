@@ -369,6 +369,11 @@ sequence</code></pre>
 x &lt;- 1:7
 x</code></pre>
 <pre><code>## [1] 1 2 3 4 5 6 7</code></pre>
+<pre class="r"><code>#2. Create a vector using seq() function.
+#Output: [1] 1.0 1.2 1.4 1.6 1.8 2.0 2.2 2.4 2.6 2.8 3.0
+#The numbers are sequence but in 0.2 interval.
+seq(1, 3, by=0.2)</code></pre>
+<pre><code>##  [1] 1.0 1.2 1.4 1.6 1.8 2.0 2.2 2.4 2.6 2.8 3.0</code></pre>
 <pre class="r"><code>Vec&lt;- seq(1,3,0.2)
 Vec</code></pre>
 <pre><code>##  [1] 1.0 1.2 1.4 1.6 1.8 2.0 2.2 2.4 2.6 2.8 3.0</code></pre>
@@ -590,163 +595,163 @@ head(selected_columns)</code></pre>
 ## 4 Austria Wieden          100   4   Hotel              4.4000000000000004
 ## 5 Austria Wieden           58   3   Hotel              3.2               
 ## 6 Austria Wieden          110   3.5 Apartment          4</code></pre>
-<pre class="r"><code>Vegetables &lt;- list(&quot;carrots&quot;,&quot;potato&quot;,&quot;eggplant&quot;,&quot;potato&quot;, &quot;broccoli&quot;, &quot;tomato&quot;, &quot;onion&quot;, &quot;seaweed&quot;,&quot;cabbage&quot;,&quot;corn&quot;)
+<pre class="r"><code>Vegetables &lt;- list(&quot;tomato&quot;,&quot;eggplant&quot;,&quot;okra&quot;,&quot;beans&quot;, &quot;cabbage&quot;, &quot;potato&quot;, &quot;carrots&quot;, &quot;lettuce&quot;,&quot;radish&quot;,&quot;squash&quot;)
 Vegetables</code></pre>
 <pre><code>## [[1]]
-## [1] &quot;carrots&quot;
-## 
-## [[2]]
-## [1] &quot;potato&quot;
-## 
-## [[3]]
-## [1] &quot;eggplant&quot;
-## 
-## [[4]]
-## [1] &quot;potato&quot;
-## 
-## [[5]]
-## [1] &quot;broccoli&quot;
-## 
-## [[6]]
 ## [1] &quot;tomato&quot;
 ## 
-## [[7]]
-## [1] &quot;onion&quot;
+## [[2]]
+## [1] &quot;eggplant&quot;
 ## 
-## [[8]]
-## [1] &quot;seaweed&quot;
+## [[3]]
+## [1] &quot;okra&quot;
 ## 
-## [[9]]
+## [[4]]
+## [1] &quot;beans&quot;
+## 
+## [[5]]
 ## [1] &quot;cabbage&quot;
 ## 
+## [[6]]
+## [1] &quot;potato&quot;
+## 
+## [[7]]
+## [1] &quot;carrots&quot;
+## 
+## [[8]]
+## [1] &quot;lettuce&quot;
+## 
+## [[9]]
+## [1] &quot;radish&quot;
+## 
 ## [[10]]
-## [1] &quot;corn&quot;</code></pre>
-<pre class="r"><code>vegetablesList &lt;- append(Vegetables,c(&quot;spinach&quot;,&quot;green beans&quot;),after=10)
+## [1] &quot;squash&quot;</code></pre>
+<pre class="r"><code>vegetablesList &lt;- append(Vegetables,c(&quot;bell pepper&quot;,&quot;chayote&quot;),after=10)
 vegetablesList</code></pre>
 <pre><code>## [[1]]
-## [1] &quot;carrots&quot;
-## 
-## [[2]]
-## [1] &quot;potato&quot;
-## 
-## [[3]]
-## [1] &quot;eggplant&quot;
-## 
-## [[4]]
-## [1] &quot;potato&quot;
-## 
-## [[5]]
-## [1] &quot;broccoli&quot;
-## 
-## [[6]]
 ## [1] &quot;tomato&quot;
 ## 
-## [[7]]
-## [1] &quot;onion&quot;
+## [[2]]
+## [1] &quot;eggplant&quot;
 ## 
-## [[8]]
-## [1] &quot;seaweed&quot;
+## [[3]]
+## [1] &quot;okra&quot;
 ## 
-## [[9]]
+## [[4]]
+## [1] &quot;beans&quot;
+## 
+## [[5]]
 ## [1] &quot;cabbage&quot;
 ## 
+## [[6]]
+## [1] &quot;potato&quot;
+## 
+## [[7]]
+## [1] &quot;carrots&quot;
+## 
+## [[8]]
+## [1] &quot;lettuce&quot;
+## 
+## [[9]]
+## [1] &quot;radish&quot;
+## 
 ## [[10]]
-## [1] &quot;corn&quot;
+## [1] &quot;squash&quot;
 ## 
 ## [[11]]
-## [1] &quot;spinach&quot;
+## [1] &quot;bell pepper&quot;
 ## 
 ## [[12]]
-## [1] &quot;green beans&quot;</code></pre>
-<pre class="r"><code>Veggies &lt;- append(vegetablesList,c(&quot;Cauliflower&quot;,&quot;Sprouts&quot;,&quot;Kale&quot;,&quot;Sweet Potatos&quot;),after=5)
+## [1] &quot;chayote&quot;</code></pre>
+<pre class="r"><code>Veggies &lt;- append(vegetablesList,c(&quot;asparagus&quot;,&quot;celery&quot;,&quot;artichoke&quot;,&quot; mushroom&quot;),after=5)
 Veggies</code></pre>
 <pre><code>## [[1]]
-## [1] &quot;carrots&quot;
-## 
-## [[2]]
-## [1] &quot;potato&quot;
-## 
-## [[3]]
-## [1] &quot;eggplant&quot;
-## 
-## [[4]]
-## [1] &quot;potato&quot;
-## 
-## [[5]]
-## [1] &quot;broccoli&quot;
-## 
-## [[6]]
-## [1] &quot;Cauliflower&quot;
-## 
-## [[7]]
-## [1] &quot;Sprouts&quot;
-## 
-## [[8]]
-## [1] &quot;Kale&quot;
-## 
-## [[9]]
-## [1] &quot;Sweet Potatos&quot;
-## 
-## [[10]]
 ## [1] &quot;tomato&quot;
 ## 
-## [[11]]
-## [1] &quot;onion&quot;
+## [[2]]
+## [1] &quot;eggplant&quot;
 ## 
-## [[12]]
-## [1] &quot;seaweed&quot;
+## [[3]]
+## [1] &quot;okra&quot;
 ## 
-## [[13]]
+## [[4]]
+## [1] &quot;beans&quot;
+## 
+## [[5]]
 ## [1] &quot;cabbage&quot;
 ## 
+## [[6]]
+## [1] &quot;asparagus&quot;
+## 
+## [[7]]
+## [1] &quot;celery&quot;
+## 
+## [[8]]
+## [1] &quot;artichoke&quot;
+## 
+## [[9]]
+## [1] &quot; mushroom&quot;
+## 
+## [[10]]
+## [1] &quot;potato&quot;
+## 
+## [[11]]
+## [1] &quot;carrots&quot;
+## 
+## [[12]]
+## [1] &quot;lettuce&quot;
+## 
+## [[13]]
+## [1] &quot;radish&quot;
+## 
 ## [[14]]
-## [1] &quot;corn&quot;
+## [1] &quot;squash&quot;
 ## 
 ## [[15]]
-## [1] &quot;spinach&quot;
+## [1] &quot;bell pepper&quot;
 ## 
 ## [[16]]
-## [1] &quot;green beans&quot;</code></pre>
+## [1] &quot;chayote&quot;</code></pre>
 <pre class="r"><code>NewVeggies&lt;- Veggies[c(-5,-10,-15)]
 NewVeggies</code></pre>
 <pre><code>## [[1]]
-## [1] &quot;carrots&quot;
+## [1] &quot;tomato&quot;
 ## 
 ## [[2]]
-## [1] &quot;potato&quot;
-## 
-## [[3]]
 ## [1] &quot;eggplant&quot;
 ## 
+## [[3]]
+## [1] &quot;okra&quot;
+## 
 ## [[4]]
-## [1] &quot;potato&quot;
+## [1] &quot;beans&quot;
 ## 
 ## [[5]]
-## [1] &quot;Cauliflower&quot;
+## [1] &quot;asparagus&quot;
 ## 
 ## [[6]]
-## [1] &quot;Sprouts&quot;
+## [1] &quot;celery&quot;
 ## 
 ## [[7]]
-## [1] &quot;Kale&quot;
+## [1] &quot;artichoke&quot;
 ## 
 ## [[8]]
-## [1] &quot;Sweet Potatos&quot;
+## [1] &quot; mushroom&quot;
 ## 
 ## [[9]]
-## [1] &quot;onion&quot;
+## [1] &quot;carrots&quot;
 ## 
 ## [[10]]
-## [1] &quot;seaweed&quot;
+## [1] &quot;lettuce&quot;
 ## 
 ## [[11]]
-## [1] &quot;cabbage&quot;
+## [1] &quot;radish&quot;
 ## 
 ## [[12]]
-## [1] &quot;corn&quot;
+## [1] &quot;squash&quot;
 ## 
 ## [[13]]
-## [1] &quot;green beans&quot;</code></pre>
+## [1] &quot;chayote&quot;</code></pre>
 <pre class="r"><code>length(NewVeggies)</code></pre>
 <pre><code>## [1] 13</code></pre>
 
