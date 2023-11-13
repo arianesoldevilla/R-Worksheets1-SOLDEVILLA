@@ -15,6 +15,10 @@ x
 #The numbers are sequence but in 0.2 interval.
 seq(1, 3, by=0.2)
 
+#a.
+Vec<- seq(1,3,0.2)
+Vec
+
 #3. Create a vector with the age of the factory workers.
 
 age <- c(34, 28, 22, 36, 27, 18, 52, 39, 42, 29, 35, 31, 27,
@@ -103,10 +107,90 @@ print(annual_pay)
 
 #c Create an excel file from the table above.
 
-install.packages("readr")
+library(readr)
+PowerRanking <- read_csv("/cloud/project/R-Worksheets1-SOLDEVILLA/PowerRanking.csv", show_col_types = FALSE)
+PowerRanking
+
+#d subset_data <- PowerRanking[10:20, ]
+save(subset_data, file = "Ranks.RData")
+print(subset_data)
+
+subset_data <- PowerRanking[10:20, ]
+save(subset_data, file = "Ranks.RData")
+print(subset_data)
+
+#8. Create vectors according to the above table.
+#a.
+power_ranking <- c(1:25)
+celebtrity_names <-c("Tom Cruise", "Rolling Stone", "Oprah Winfrey", "U2", "Tiger Woods", "Steven Spielberg", "Howard Stern", "50 Cent", 
+                     "Cast of Sopranos", "Dan Brown", "Bruce Springsteen", "Donald Trump", "Muhammad Ali", "Paul McCartney", "George Lucas","Elton John", "David Letterman", "Phil Mickelson", "J.K Rowling", "Bradd Pitt", "Peter Jackson", "Dr. Phil McGraw", "Jay   Lenon", "Celine Dion", "Kobe Bryant" )
+pay <- c(67,90,225,110,90,332,302,41,52,88,55,44,55,40,233,34,40,47,75,25,39,45,32,40,31)
+PowerRanking <- data.frame(power_ranking, celebtrity_names, pay)
+PowerRanking
+
+#b. Modify the power ranking and pay of J.K. Rowling. Change power ranking to 15 and pay to 90.
+
+power_ranking[19] <- 15
+power_ranking 
+pay[19] <- 90
+pay
+
+#c Create an excel file from the table above.
 
 library(readr)
-#sfg
+PowerRanking <- read_csv("/cloud/project/R-Worksheets1-SOLDEVILLA/PowerRanking.csv", show_col_types = FALSE)
+PowerRanking
+
+#d
+subset_data <- PowerRanking[10:20, ]
+save(subset_data, file = "Ranks.RData")
+print(subset_data)
+
+#9.
+#a
+install.packages("readxl")
+library(readxl)
+hotelsVienna <- read_excel("hotels-vienna.xlsx")
+# View(hotelsVienna)
+hotelsVienna
+
+#b
+dimensions <- dim(hotelsVienna)
+dimensions
+
+
+#c
+selected_columns <- hotelsVienna[, c("country", "neighbourhood", "price", "stars", "accommodation_type", "rating")]
+head(selected_columns, n = nrow(selected_columns))
+
+#d
+save(selected_columns, file = "new.RData")
+
+#e
+load("new.RData")
+head(selected_columns)
+tail(selected_columns)
+
+#10.
+#a
+Vegetables <- list("carrots","potato","eggplant","potato", "broccoli", "tomato", "onion", "seaweed","cabbage","corn")
+Vegetables
+
+#b
+vegetablesList <- append(Vegetables,c("spinach","green beans"),after=10)
+vegetablesList
+
+#c
+Veggies <- append(vegetablesList,c("Cauliflower","Sprouts","Kale","Sweet Potatos"),after=5)
+Veggies
+
+#d
+NewVeggies<- Veggies[c(-5,-10,-15)]
+NewVeggies
+
+length(NewVeggies)
+
+
 
 
 
