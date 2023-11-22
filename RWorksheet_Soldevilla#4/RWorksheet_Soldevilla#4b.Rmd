@@ -9,6 +9,7 @@ output: pdf_document
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
+#1
 ```{r 1}
 vectorA <- c(1, 2, 3, 4, 5,)
 matrixA <- matrix(0, nrow = 5, ncol = 5)
@@ -22,6 +23,8 @@ for(i in 1:5) {
 
 matrixA
 ```
+
+#2
 ```{r 2}
 num_rows <- 5
 
@@ -33,6 +36,7 @@ for(i in 1:num_rows){
 }
 ```
 
+#3
 ```{r 3}
 n <- as.numeric(readline("Enter the starting number for the Fibonacci sequence:"))
 
@@ -54,3 +58,55 @@ cat("\n")
 ```
   }
 }
+
+#4
+``` {r num4}
+library(readr)
+shoes <- read_csv("/cloud/project/RWorksheet_Soldevilla#4/shoes.csv")
+shoes
+```
+
+``` {r num4a}
+shoes <-  read.csv("shoes.csv")
+shoes
+ssize <- shoes[c(1:6),]
+ssize
+```
+
+``` {r num4b}
+male_subset <- shoes[shoes$Gender == "M", c("Shoe.Size", "Height")]
+female_subset <- shoes[shoes$Gender == "F", c("Shoe.Size", "Height")]
+male_subset
+female_subset
+```
+
+
+```{r num4c}
+household <- read.csv("HouseholdData.csv")
+household
+
+gender_counts <- table(household$Sex)
+
+plot(1, type = "n", main = "Number of Males and Females in Household Data",
+     xlab = "Sex", ylab = "Count", xlim = c(0.1, 2.5), ylim = c(0, max(gender_counts)))
+
+barplot(gender_counts, col = c("yellow", "gray"), add = TRUE)
+
+legend("topright", legend = levels(as.factor(household$Sex)), fill = c("yellow", "gray"))
+```
+
+#5
+
+```{r num5a}
+pie_chart <- c(60, 10, 5, 25)
+pie(pie_chart, labels = paste0(pie_chart, "%"),
+    main = "Monthly Income of Dela Cruz family ", col = rainbow(length(pie_chart)))
+
+legend("topleft", legend = c("Food", "Electricity", "Savings", "Miscellaneous"),
+       fill = rainbow(length(pie_chart)))
+```
+
+#6
+```{r num6a}
+
+```
