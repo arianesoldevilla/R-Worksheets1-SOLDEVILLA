@@ -1,0 +1,88 @@
+---
+title: "RWorksheet_Soldevilla#4c.Rmd"
+author: "Ariane Soldevilla BSIT 2-B"
+date: "2023-11-28"
+output: pdf_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r }
+install.packages("ggplot2")
+library(ggplot2)
+install.packages("tidyverse")
+```
+
+```{r num1a}
+library(readr)
+mpg <- read_csv("mpg.csv")
+mpg
+```
+
+```{r num1b}
+#The variables that are categorical in mpg dataset are manufacturer, model, trans, drv, and fl.
+```
+
+```{r num1c}
+#The continuous variables in the mpg dataset are displ, year, cyl, cty, and hwy.
+```
+
+```{r num2}
+library(ggplot2)
+data(mpg)
+models_per_manufacturer <- table(mpg$manufacturer)
+manufacturer_most_models <- names(models_per_manufacturer[which.max(models_per_manufacturer)])
+cat("Manufacturer with the most models:", manufacturer_most_models, "\n")
+variations_per_model <- table(mpg$model)
+model_most_variations <- names(variations_per_model[which.max(variations_per_model)])
+cat("Model with the most variations:", model_most_variations, "\n")
+
+```
+
+```{r num 2a}
+library(ggplot2)
+library(dplyr)
+data(mpg)
+unique_models_by_manufacturer <- mpg %>%
+  group_by(manufacturer) %>%
+  summarize(unique_models = n_distinct(model))
+print(unique_models_by_manufacturer)
+
+
+```
+```{r num 2b}
+models_per_manufacturer <- table(mpg$manufacturer)
+
+#Using plot()
+plot(models_per_manufacturer, 
+     main = "Number of Models by Manufacturer",
+     xlab = "Manufacturer",
+     ylab = "Number of Models",
+     col = "yellow",
+     ylim = c(0, max(models_per_manufacturer) + 2))
+
+max_manufacturer <- which.max(models_per_manufacturer)
+text(max_manufacturer, models_per_manufacturer[max_manufacturer] + 1,
+     labels = paste("Max:", max(models_per_manufacturer)),
+     col = "pink", pos = 3)
+
+library(ggplot2)
+
+#Using ggplot2
+ggplot(data = as.data.frame(models_per_manufacturer), aes(x = Var1, y = Freq)) +
+  geom_bar(stat = "identity", fill = "yellow") +
+  labs(title = "Number of Models by Manufacturer",
+       x = "Manufacturer",
+       y = "Number of Models") +
+  geom_text(aes(label = Freq), vjust = -0.3, col = "blue", size = 3) +
+  theme_minimal()
+
+```
+
+```{r 2} 
+#. Same dataset will be used. You are going to show the relationship of the modeland the manufacturer.
+
+
+
