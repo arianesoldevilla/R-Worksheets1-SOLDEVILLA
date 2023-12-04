@@ -16,43 +16,55 @@ install.packages("tidyverse")
 ```
 
 ```{r num1a}
+# Show your solutions on how to import a csv file into the environment
 library(readr)
 mpg <- read_csv("mpg.csv")
-mpg
+View(mpg)
 ```
 
 ```{r num1b}
+#  Which variables from mpg dataset are categorical?
+
 #The variables that are categorical in mpg dataset are manufacturer, model, trans, drv, and fl.
 ```
 
 ```{r num1c}
+#Which are continuous variables?
+
 #The continuous variables in the mpg dataset are displ, year, cyl, cty, and hwy.
 ```
 
 ```{r num2}
-library(ggplot2)
-data(mpg)
-models_per_manufacturer <- table(mpg$manufacturer)
-manufacturer_most_models <- names(models_per_manufacturer[which.max(models_per_manufacturer)])
-cat("Manufacturer with the most models:", manufacturer_most_models, "\n")
-variations_per_model <- table(mpg$model)
-model_most_variations <- names(variations_per_model[which.max(variations_per_model)])
-cat("Model with the most variations:", model_most_variations, "\n")
+#Which manufacturer has the most models in this data set? Which model has the most variations? Show your answer.
+
+library(dplyr)
+manufacturer_most_models <- mpg %>%
+  group_by(manufacturer) %>%
+  summarize(number_of_models = n_distinct(model)) %>%
+  top_n(1, number_of_models)
+model_most_variations <- mpg %>%
+  group_by(model) %>%
+  summarize(number_of_variations = n_distinct(trans)) %>%
+  top_n(1, number_of_variations)
+cat("Manufacturer with the most models:", manufacturer_most_models$manufacturer, "\n")
+cat("Model with the most variations:", model_most_variations$model, "\n")
 
 ```
 
 ```{r num 2a}
-library(ggplot2)
+#  Group the manufacturers and find the unique models. Show your codes and result.
+
 library(dplyr)
-data(mpg)
 unique_models_by_manufacturer <- mpg %>%
   group_by(manufacturer) %>%
-  summarize(unique_models = n_distinct(model))
+  distinct(model)
 print(unique_models_by_manufacturer)
 
 
 ```
 ```{r num 2b}
+# Graph the result by using plot() and ggplot(). Write the codes and its result.
+
 models_per_manufacturer <- table(mpg$manufacturer)
 
 #Using plot()
@@ -66,7 +78,7 @@ plot(models_per_manufacturer,
 max_manufacturer <- which.max(models_per_manufacturer)
 text(max_manufacturer, models_per_manufacturer[max_manufacturer] + 1,
      labels = paste("Max:", max(models_per_manufacturer)),
-     col = "pink", pos = 3)
+     col = "blue", pos = 3)
 
 library(ggplot2)
 
@@ -81,8 +93,118 @@ ggplot(data = as.data.frame(models_per_manufacturer), aes(x = Var1, y = Freq)) +
 
 ```
 
-```{r 2} 
-#. Same dataset will be used. You are going to show the relationship of the modeland the manufacturer.
+```{r num 2a} 
+#. Same dataset will be used. You are going to show the relationship of the model and the manufacturer.
+
+library(ggplot2)
+ggplot(mpg, aes(model, manufacturer)) + 
+  geom_point()
+```
+```{r num 2b}
+# The plot might not be very informative because it's attempting to create a scatter plot using categorical variables for both the x and y axes. Scatter plots are typically more suited for continuous variables.
+
+#Tallying Data
+library(ggplot2)
+ggplot(mpg, aes(model, fill = manufacturer)) + 
+  geom_bar(position = "dodge") +
+  theme(axis.text.x = element_text(angle = 45, hjust = 1))
+```
+```{r num3}
+#Plot the model and the year using ggplot(). Use only the top 20 observations. Write the codes and its results.
+
+library(ggplot2)
+top_20 <- head(mpg, 20)
+ggplot(top_20, aes(model, year)) + 
+  geom_point() +
+  theme(axis.text.x = element_text(angle = 45, hjust = 1)) 
+```
+
+```{r num4}
+# Using the pipe (%>%), group the model and get the number of cars per model. Show codes and its result
+
+library(dplyr)
+car_counts <- mpg %>%
+  group_by(model) %>%
+  summarize(number_of_cars = n())
+print(car_counts)
+
+```
+```{r num 4a}
+# a. Plot using geom_bar() using the top 20 observations only. The graphs should have a title, labels and colors. Show code and results.
+
+library(ggplot2)
+top_20 <- head(mpg, 20)
+ggplot(top_20, aes(x = model, fill = factor(model))) +
+  geom_bar() +
+  labs(title = "Number of Cars by Model (Top 20 Observations)",
+       x = "Car Model",
+       y = "Number of Cars") +
+  scale_fill_discrete(name = "Car Model") +  
+  theme(axis.text.x = element_text(angle = 45, hjust = 1))  
+ 
+```
+```{r num 4b}
+# Plot using the geom_bar() + coord_flip() just like what is shown below. Show codes and its result.
+
+library(ggplot2)
+top_20 <- head(mpg, 20)
+ggplot(top_20, aes(x = model, fill = factor(model))) +
+  geom_bar() +
+  labs(title = "Number of Cars by Model (Top 20 Observations)",
+       x = "Number of Cars",
+       y = "Car Model") +
+  scale_fill_discrete(name = "Car Model") +  
+  coord_flip() 
 
 
+```
 
+```{r num 5}
+# Plot the relationship between cyl - number of cylinders and displ - engine displacement using geom_point with aesthetic color = engine displacement. Title should be “Relationship between No. of Cylinders and Engine Displacement”.
+
+library(ggplot2)
+ggplot(mpg, aes(x = cyl, y = displ, color = displ)) +
+  geom_point() +
+  labs(title = "Relationship between No. of Cylinders and Engine Displacement",
+       x = "Number of Cylinders",
+       y = "Engine Displacement") +
+  scale_color_continuous(name = "Engine Displacement")  
+
+
+```
+
+```{r num 5a}
+# How would you describe its relationship? Show the codes and its result.
+
+library(ggplot2)
+ggplot(mpg, aes(x = cyl, y = displ, color = displ)) +
+  geom_point() +
+  labs(title = "Relationship between No. of Cylinders and Engine Displacement",
+       x = "Number of Cylinders",
+       y = "Engine Displacement") +
+  scale_color_continuous(name = "Engine Displacement")
+
+```
+
+```{r num 6}
+# Plot the relationship between displ (engine displacement) and hwy(highway miles per gallon). Mapped it with a continuous variable you have identified in #1-c. What is its result? Why it produced such output?
+
+library(ggplot2)
+continuous_variable <- mpg$your_continuous_variable
+ggplot(mpg, aes(x = displ, y = hwy, color = continuous_variable)) +
+  geom_point() +
+  labs(title = "Relationship between Engine Displacement and Highway MPG",
+       x = "Engine Displacement",
+       y = "Highway MPG") +
+  scale_color_continuous(name = "Your Continuous Variable")  
+
+```
+```{r num 6}
+library(readr)
+traffic <- read_csv("traffic.csv")
+View(traffic)
+```
+
+```{r num 6a}
+
+```
