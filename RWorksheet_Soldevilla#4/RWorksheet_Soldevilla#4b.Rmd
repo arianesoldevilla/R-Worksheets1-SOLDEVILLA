@@ -11,17 +11,17 @@ knitr::opts_chunk$set(echo = TRUE)
 
 #1
 ```{r 1}
-vectorA <- c(1, 2, 3, 4, 5,)
+vectorA <- c(1, 2, 3, 4, 5)
 matrixA <- matrix(0, nrow = 5, ncol = 5)
 
-for(i in 1:5) {
-  for (j in 1:5){
-   matrixA[i,j] <- abs(vectorA[i]-
-   vectorA[j])
-}
+for (i in 1:5) {
+  for (j in 1:5) {
+    matrixA[i, j] <- abs(vectorA[i] - vectorA[j])
+  }
 }
 
 matrixA
+
 ```
 
 #2
@@ -108,5 +108,42 @@ legend("topleft", legend = c("Food", "Electricity", "Savings", "Miscellaneous"),
 
 #6
 ```{r num6a}
+data (iris)
+str(iris)
 
+mean_values <- colMeans(iris[, 1:4])
+mean_values
+
+species_counts <- table(iris$Species)
+
+colors <- c("salmon", "cyan", "slategray")
+
+pie (species_counts, labels = species_counts, col= colors, main = "Species Distribution")
+
+legend("topright", legend = levels(iris$Species), fill = colors)
+
+cat("Last six rows of Setosa subset:\n")
+tail(subset(iris, Species == "setosa"), 6)
+
+cat("\nLast six rows of Versicolor subset:\n")
+tail(subset(iris, Species == "versicolor"), 6)
+
+cat("\nLast six rows of Virginica subset:\n")
+tail(subset(iris, Species == "virginica"), 6)
+
+
+colors <- c("setosa" = "yellow", "versicolor" = "magenta", "virginica" = "turquoise")
+symbols <- c("setosa" = 16, "versicolor" = 17, "virginica" = 18)
+
+# Create a scatterplot
+plot(iris$Sepal.Length, iris$Sepal.Width,
+     col = colors[as.character(iris$Species)],
+     pch = symbols[as.character(iris$Species)],
+     main = "Iris Dataset",
+     sub = "Sepal width and length",
+     xlab = "Sepal Length",
+     ylab = "Sepal Width")
+
+# Add legend
+legend("topright", legend = levels(iris$Species), col = colors, pch = symbols)
 ```
