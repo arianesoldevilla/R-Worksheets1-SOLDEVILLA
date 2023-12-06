@@ -19,19 +19,21 @@ install.packages("tidyverse")
 # Show your solutions on how to import a csv file into the environment
 library(readr)
 mpg <- read_csv("mpg.csv")
-View(mpg)
+mpg
 ```
 
 ```{r num1b}
-#  Which variables from mpg dataset are categorical?
-
-#The variables that are categorical in mpg dataset are manufacturer, model, trans, drv, and fl.
+#install.packages(ggplot2)
+library(ggplot2)
+data(mpg)
+str(mpg)
+#"manufacturer", "model", "trans", "drv", "fl", "class"
 ```
 
 ```{r num1c}
 #Which are continuous variables?
 
-#The continuous variables in the mpg dataset are displ, year, cyl, cty, and hwy.
+#"displ", "year", "cyl", "cty", "hwy"
 ```
 
 ```{r num2}
@@ -94,7 +96,7 @@ ggplot(data = as.data.frame(models_per_manufacturer), aes(x = Var1, y = Freq)) +
 ```
 
 ```{r num 2a} 
-#. Same dataset will be used. You are going to show the relationship of the model and the manufacturer.
+# Same dataset will be used. You are going to show the relationship of the model and the manufacturer.
 
 library(ggplot2)
 ggplot(mpg, aes(model, manufacturer)) + 

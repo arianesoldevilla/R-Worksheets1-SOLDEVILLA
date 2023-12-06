@@ -38,32 +38,32 @@ for(i in 1:num_rows){
 
 #3
 ```{r 3}
-n <- as.numeric(readline("Enter the starting number for the Fibonacci sequence:"))
-
-a <- n
-b <- n
-
-cat(a,"")
-
-repeat{
-  c <- a+b
-  if(c > 500){
+input.number <- as.numeric(readline("Enter a number to start the Fibonacci sequence: "))
+assume.number <- 0
+x <- 0
+y <- 1
+repeat {
+  if (x > 500) {
     break
   }
-  cat(c,"")
-  a <- b
-  b <- c
+  if (x >= assume.number) {
+    cat(x, " ")
+  }
+  temp <- x + y
+  x <- y
+  y <- temp
 }
 cat("\n")
+
 ```
-  }
-}
 
 #4
 ``` {r num4}
 library(readr)
-shoes <- read_csv("/cloud/project/RWorksheet_Soldevilla#4/shoes.csv")
+shoes <- read_csv("/cloud/project/RWorksheet_Soldevilla#4/shoes.csv",
+                  show_col_types = FALSE)
 shoes
+
 ```
 
 ``` {r num4a}
@@ -82,17 +82,15 @@ female_subset
 
 
 ```{r num4c}
-household <- read.csv("HouseholdData.csv")
-household
-
-gender_counts <- table(household$Sex)
-
-plot(1, type = "n", main = "Number of Males and Females in Household Data",
-     xlab = "Sex", ylab = "Count", xlim = c(0.1, 2.5), ylim = c(0, max(gender_counts)))
-
-barplot(gender_counts, col = c("yellow", "gray"), add = TRUE)
-
-legend("topright", legend = levels(as.factor(household$Sex)), fill = c("yellow", "gray"))
+GraphMF<- table(shoes$Gender)
+barplot(GraphMF,
+        main = "Number of Males and Females",
+        xlab = "Gender",
+        ylab = "Count",
+        col = c("plum", "gray"),
+        legend.text = c("Male", "Female"),
+        beside = TRUE
+)
 ```
 
 #5
@@ -108,42 +106,68 @@ legend("topleft", legend = c("Food", "Electricity", "Savings", "Miscellaneous"),
 
 #6
 ```{r num6a}
-data (iris)
+data("iris")
 str(iris)
+#It has 150 observations and 5 variables.
+```
 
-mean_values <- colMeans(iris[, 1:4])
-mean_values
+```{r num 6b}
+meanIris<- colMeans(iris[, c("Sepal.Length", "Sepal.Width", "Petal.Length", "Petal.Width")])
+print(meanIris)
+```
 
-species_counts <- table(iris$Species)
+```{r num6c}
+specs <- table(iris$Species)
 
-colors <- c("salmon", "cyan", "slategray")
+clors <- c("salmon", "cyan", "yellow")
 
-pie (species_counts, labels = species_counts, col= colors, main = "Species Distribution")
+pie(specs,
+    labels = paste(names(specs), "\n", sprintf("%.1f%%", prop.table(specs) * 100)),
+    col = clors,
+    main = "Species Distribution",
+    cex.main = 1.5,
+    cex = 0.8      
+)
+```
 
-legend("topright", legend = levels(iris$Species), fill = colors)
+```{r num6d}
+SetSub <- subset(iris, Species == "setosa")
+VersiSub <- subset(iris, Species == "versicolor")
+VirgiSub <- subset(iris, Species == "virginica")
 
-cat("Last six rows of Setosa subset:\n")
-tail(subset(iris, Species == "setosa"), 6)
+# Display the last six rows of each species
+cat("Last six rows of Setosa:")
+print(tail(SetSub))
 
-cat("\nLast six rows of Versicolor subset:\n")
-tail(subset(iris, Species == "versicolor"), 6)
+cat("Last six rows of Versicolor:")
+print(tail(VersiSub))
 
-cat("\nLast six rows of Virginica subset:\n")
-tail(subset(iris, Species == "virginica"), 6)
+cat("Last six rows of Virginica:")
+print(tail(VirgiSub))
+```
 
+``` {r num6e}
 
-colors <- c("setosa" = "yellow", "versicolor" = "magenta", "virginica" = "turquoise")
-symbols <- c("setosa" = 16, "versicolor" = 17, "virginica" = 18)
+data(iris)
 
-# Create a scatterplot
+iris$Species <- as.factor(iris$Species)
+
 plot(iris$Sepal.Length, iris$Sepal.Width,
-     col = colors[as.character(iris$Species)],
-     pch = symbols[as.character(iris$Species)],
+     pch = as.integer(iris$Species),
+     col = iris$Species,
      main = "Iris Dataset",
      sub = "Sepal width and length",
      xlab = "Sepal Length",
-     ylab = "Sepal Width")
+     ylab = "Sepal Width"
+)
+```
 
-# Add legend
-legend("topright", legend = levels(iris$Species), col = colors, pch = symbols)
+``` {r num6f}
+#The scatterplot shows similarities between the sepal width and length ranging from 5.5 to 7.0.
+```
+
+```{r num7a}
+library(readxl)
+alexa_file <- read_excel("alexa_file.xlsx")
+alexa_file
 ```
