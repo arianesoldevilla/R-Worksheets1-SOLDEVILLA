@@ -17,23 +17,22 @@ install.packages("tidyverse")
 
 ```{r num1a}
 # Show your solutions on how to import a csv file into the environment
-library(readr)
-mpg <- read_csv("mpg.csv")
+data(mpg)
 mpg
+
 ```
 
 ```{r num1b}
-#install.packages(ggplot2)
-library(ggplot2)
-data(mpg)
-str(mpg)
-#"manufacturer", "model", "trans", "drv", "fl", "class"
+#  Which variables from mpg dataset are categorical?
+
+#The variables that are categorical in mpg dataset are manufacturer, model, trans, drv, and fl.
+
 ```
 
 ```{r num1c}
 #Which are continuous variables?
 
-#"displ", "year", "cyl", "cty", "hwy"
+#The continuous variables in the mpg dataset are displ, year, cyl, cty, and hwy.
 ```
 
 ```{r num2}
@@ -95,14 +94,14 @@ ggplot(data = as.data.frame(models_per_manufacturer), aes(x = Var1, y = Freq)) +
 
 ```
 
-```{r num 2a} 
+```{r num 2aa} 
 # Same dataset will be used. You are going to show the relationship of the model and the manufacturer.
 
 library(ggplot2)
 ggplot(mpg, aes(model, manufacturer)) + 
   geom_point()
 ```
-```{r num 2b}
+```{r num 2bb}
 # The plot might not be very informative because it's attempting to create a scatter plot using categorical variables for both the x and y axes. Scatter plots are typically more suited for continuous variables.
 
 #Tallying Data
@@ -201,12 +200,100 @@ ggplot(mpg, aes(x = displ, y = hwy, color = continuous_variable)) +
   scale_color_continuous(name = "Your Continuous Variable")  
 
 ```
-```{r num 6}
+```{r num 6.1}
 library(readr)
-traffic <- read_csv("traffic.csv")
-View(traffic)
+traffic <- read_csv("traffic.csv",show_col_types = FALSE)
+traffic
 ```
 
 ```{r num 6a}
+observations <- nrow(traffic)
+observations
 
+columns <- ncol(traffic)
+columns
+```
+
+```{r num 6b}
+junction1 <- subset(traffic, Junction ==1)
+junction1
+
+junction2 <- subset(traffic, Junction ==2)
+junction2
+
+junction3 <- subset(traffic, Junction ==3)
+junction3
+
+junction4 <- subset(traffic, Junction ==4)
+junction4
+```
+
+```{r num 6c}
+# Assuming 'traffic' is your dataset
+library(ggplot2)
+
+# Plot each junction using geom_line()
+ggplot(traffic, aes(x = seq_along(Junction), y = DateTime, group = Junction, color = factor(Junction))) +
+  geom_line() +
+  labs(title = "Plots in each Junction",
+       x = "Observation",
+       y = "Date&Time") +
+  scale_color_discrete(name = "Junction")
+```
+
+```{r num 7}
+library(readxl)
+alexa_file <- read_excel("alexa_file.xlsx")
+alexa_file
+```
+
+```{r num 7a}
+observ <- nrow(alexa_file)
+observ
+
+colm <- ncol (alexa_file)
+colm
+```
+
+```{r num 7b}
+# Assuming 'your_dataset' is your actual dataset and 'variations' is the variable of interest
+library(dplyr)
+
+# Group by variations and count the occurrences of each variation
+result <- alexa_file %>%
+  group_by(variation) %>%
+  summarize(total = n())
+
+# Print the result
+print(result)
+```
+
+```{r num 7c}
+library(ggplot2)
+ggplot(alexa_file, aes(x = variation)) +
+  geom_bar(fill = "coral", color = "slategray") +
+  labs(title = "Distribution of Variation",
+       y = "Count",
+       x = "Variations") +
+  coord_flip()
+
+```
+
+```{r num 7d}
+library(ggplot2)
+ggplot(alexa_file, aes(x = date, y = verified_reviews)) +
+  geom_line(color= "yellow") +
+  labs (title = "Date and the number of verified reviews",
+        x = "Date",
+        y = "Rating") +
+  coord_flip()
+```
+
+```{r num 7e}
+ggplot(alexa_file, aes(x = variation, y = rating)) +
+  geom_boxplot(fill = "coral", color = "slategray") +
+  labs(title = "Relationship Between Variations and Ratings",
+       x = "Variations",
+       y = "Ratings") +
+  theme(axis.text.x = element_text(angle = 45, hjust = 1)) 
 ```
