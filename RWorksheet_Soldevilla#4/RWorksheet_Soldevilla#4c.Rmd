@@ -11,17 +11,22 @@ knitr::opts_chunk$set(echo = TRUE)
 
 ```{r }
 install.packages("ggplot2")
-library(ggplot2)
+install.packages("dplyr")
 install.packages("tidyverse")
 ```
 
+#1
+
+#1a
 ```{r num1a}
 # Show your solutions on how to import a csv file into the environment
-data(mpg)
+library(readr)
+mpg <- read_csv("mpg.csv")
 mpg
 
 ```
 
+#1b
 ```{r num1b}
 #  Which variables from mpg dataset are categorical?
 
@@ -29,12 +34,14 @@ mpg
 
 ```
 
+#1c
 ```{r num1c}
 #Which are continuous variables?
 
 #The continuous variables in the mpg dataset are displ, year, cyl, cty, and hwy.
 ```
 
+#2
 ```{r num2}
 #Which manufacturer has the most models in this data set? Which model has the most variations? Show your answer.
 
@@ -52,6 +59,7 @@ cat("Model with the most variations:", model_most_variations$model, "\n")
 
 ```
 
+#2a
 ```{r num 2a}
 #  Group the manufacturers and find the unique models. Show your codes and result.
 
@@ -63,6 +71,8 @@ print(unique_models_by_manufacturer)
 
 
 ```
+
+#2b
 ```{r num 2b}
 # Graph the result by using plot() and ggplot(). Write the codes and its result.
 
@@ -94,6 +104,7 @@ ggplot(data = as.data.frame(models_per_manufacturer), aes(x = Var1, y = Freq)) +
 
 ```
 
+#2aa
 ```{r num 2aa} 
 # Same dataset will be used. You are going to show the relationship of the model and the manufacturer.
 
@@ -101,6 +112,8 @@ library(ggplot2)
 ggplot(mpg, aes(model, manufacturer)) + 
   geom_point()
 ```
+
+#2bb
 ```{r num 2bb}
 # The plot might not be very informative because it's attempting to create a scatter plot using categorical variables for both the x and y axes. Scatter plots are typically more suited for continuous variables.
 
@@ -110,6 +123,8 @@ ggplot(mpg, aes(model, fill = manufacturer)) +
   geom_bar(position = "dodge") +
   theme(axis.text.x = element_text(angle = 45, hjust = 1))
 ```
+
+#3
 ```{r num3}
 #Plot the model and the year using ggplot(). Use only the top 20 observations. Write the codes and its results.
 
@@ -120,6 +135,7 @@ ggplot(top_20, aes(model, year)) +
   theme(axis.text.x = element_text(angle = 45, hjust = 1)) 
 ```
 
+#4
 ```{r num4}
 # Using the pipe (%>%), group the model and get the number of cars per model. Show codes and its result
 
@@ -130,6 +146,8 @@ car_counts <- mpg %>%
 print(car_counts)
 
 ```
+
+#4a
 ```{r num 4a}
 # a. Plot using geom_bar() using the top 20 observations only. The graphs should have a title, labels and colors. Show code and results.
 
@@ -144,6 +162,8 @@ ggplot(top_20, aes(x = model, fill = factor(model))) +
   theme(axis.text.x = element_text(angle = 45, hjust = 1))  
  
 ```
+
+#4b
 ```{r num 4b}
 # Plot using the geom_bar() + coord_flip() just like what is shown below. Show codes and its result.
 
@@ -156,10 +176,9 @@ ggplot(top_20, aes(x = model, fill = factor(model))) +
        y = "Car Model") +
   scale_fill_discrete(name = "Car Model") +  
   coord_flip() 
-
-
 ```
 
+#5
 ```{r num 5}
 # Plot the relationship between cyl - number of cylinders and displ - engine displacement using geom_point with aesthetic color = engine displacement. Title should be “Relationship between No. of Cylinders and Engine Displacement”.
 
@@ -170,10 +189,9 @@ ggplot(mpg, aes(x = cyl, y = displ, color = displ)) +
        x = "Number of Cylinders",
        y = "Engine Displacement") +
   scale_color_continuous(name = "Engine Displacement")  
-
-
 ```
 
+#5a
 ```{r num 5a}
 # How would you describe its relationship? Show the codes and its result.
 
@@ -187,6 +205,7 @@ ggplot(mpg, aes(x = cyl, y = displ, color = displ)) +
 
 ```
 
+#6
 ```{r num 6}
 # Plot the relationship between displ (engine displacement) and hwy(highway miles per gallon). Mapped it with a continuous variable you have identified in #1-c. What is its result? Why it produced such output?
 
@@ -200,12 +219,15 @@ ggplot(mpg, aes(x = displ, y = hwy, color = continuous_variable)) +
   scale_color_continuous(name = "Your Continuous Variable")  
 
 ```
+
+#6.1
 ```{r num 6.1}
 library(readr)
 traffic <- read_csv("traffic.csv",show_col_types = FALSE)
 traffic
 ```
 
+#6a
 ```{r num 6a}
 observations <- nrow(traffic)
 observations
@@ -214,6 +236,7 @@ columns <- ncol(traffic)
 columns
 ```
 
+#6b
 ```{r num 6b}
 junction1 <- subset(traffic, Junction ==1)
 junction1
@@ -228,6 +251,7 @@ junction4 <- subset(traffic, Junction ==4)
 junction4
 ```
 
+#6c
 ```{r num 6c}
 # Assuming 'traffic' is your dataset
 library(ggplot2)
@@ -241,56 +265,56 @@ ggplot(traffic, aes(x = seq_along(Junction), y = DateTime, group = Junction, col
   scale_color_discrete(name = "Junction")
 ```
 
+#7
 ```{r num 7}
+#install.packages("readxl")
 library(readxl)
-alexa_file <- read_excel("alexa_file.xlsx")
-alexa_file
+alexafile <- read_excel("alexa_file.xlsx")
+alexafile
 ```
 
+#7a
 ```{r num 7a}
-observ <- nrow(alexa_file)
-observ
-
-colm <- ncol (alexa_file)
-colm
+num_rows <- nrow(alexafile)
+num_columns <- ncol(alexafile)
+num_rows
+num_columns
 ```
 
+#7b
 ```{r num 7b}
-# Assuming 'your_dataset' is your actual dataset and 'variations' is the variable of interest
 library(dplyr)
 
-# Group by variations and count the occurrences of each variation
-result <- alexa_file %>%
+output <- alexafile %>%
   group_by(variation) %>%
-  summarize(total = n())
+  summarize(total_count = n())
 
-# Print the result
-print(result)
+print(output)
 ```
 
+#7c
 ```{r num 7c}
 library(ggplot2)
-ggplot(alexa_file, aes(x = variation)) +
-  geom_bar(fill = "coral", color = "slategray") +
-  labs(title = "Distribution of Variation",
-       y = "Count",
-       x = "Variations") +
-  coord_flip()
+
+ggplot(alexafile, aes(x = variation)) +
+  geom_bar() +
+  labs(title = "Distribution of Variations", x = "Variation", y = "Count") +
+  theme_minimal()
 
 ```
 
+#7d
 ```{r num 7d}
-library(ggplot2)
-ggplot(alexa_file, aes(x = date, y = verified_reviews)) +
-  geom_line(color= "yellow") +
+ggplot(alexafile, aes(x = date, y= rating)) + 
+  geom_line(color= "darkseagreen") +
   labs (title = "Date and the number of verified reviews",
         x = "Date",
-        y = "Rating") +
-  coord_flip()
+        y = "Rating")
 ```
 
+#7e
 ```{r num 7e}
-ggplot(alexa_file, aes(x = variation, y = rating)) +
+ggplot(alexafile, aes(x = variation, y = rating)) +
   geom_boxplot(fill = "coral", color = "slategray") +
   labs(title = "Relationship Between Variations and Ratings",
        x = "Variations",
