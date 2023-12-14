@@ -1,0 +1,143 @@
+---
+title: "RWorksheet5"
+author: "Ariane Soldevilla BSIT 2-B"
+date: "2023-12-12"
+output: pdf_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r }
+install.packages("Hmisc")
+install.packages("pastecs")
+install.packages("titanic")
+install.packages("tidyverse")
+```
+
+#1
+```{r num1}
+student_score <- data.frame(
+  Student = c(1, 2, 3, 4, 5, 6, 7, 8, 9, 10),
+  Pre_test = c(55, 54, 47, 57, 51, 61, 57, 54, 63, 58),
+  Post_test = c(61, 60, 56, 63, 56, 63, 59, 56, 62, 61)
+)
+print(student_score)
+```
+
+
+#1a
+```{r num 1a}
+library(Hmisc)
+library(pastecs)
+summary(student_score)
+stat.desc(student_score)
+```
+
+
+#2
+```{r num 2a}
+fertilizer_levels <- c(10, 10, 10, 20, 20, 50, 10, 20, 10, 50, 20, 50, 20, 10)
+
+# Convert to ordered factor
+ordered_factor_Fertilizer <- factor(fertilizer_levels, levels = c(10, 20, 50), ordered = TRUE)
+
+
+print("Data:")
+print(fertilizer_levels)
+print("Ordered Factor:")
+print(ordered_factor_Fertilizer)
+
+#The factor_data variable will contain the converted fertilizer levels as an ordered factor.
+```
+
+#3
+```{r num3}
+exercise_levels <- c("l", "n", "n", "i", "l", "l", "n", "n", "i", "l")
+exercise_levels
+
+el_factor <- factor(exercise_levels, levels = c("n", "l", "i"), labels = c("none", "light", "intense"))
+
+```
+
+#4
+```{r num 4}
+#a. Apply the factor function and factor level. Describe the results.
+state <- c("tas", "sa", "qld", "nsw", "nsw", "nt", "wa", "wa", "qld",
+            "vic", "nsw", "vic", "qld", "qld", "sa", "tas", "sa", "nt",
+            "wa", "vic", "qld", "nsw", "nsw", "wa", "sa", "act", "nsw",
+            "vic", "vic", "act")
+
+state_factor <- factor(state) 
+print(state_factor)
+
+#The factor function changed the list of state names into a new thing called a factor with seven parts and special names for each one. This makes it easier to understand and work with the data without having to use numbers instead of the names of the states.
+```
+
+#5a
+```{r num 5a}
+incomes <- c(60, 49, 40, 61, 64, 60, 59, 54,
+           62, 69, 70, 42, 56, 61, 61, 61, 58, 51, 48,
+           65, 49, 49, 41, 48, 52, 46, 59, 46, 58, 43)
+
+state_factor <- factor(state, levels = c("act", "nsw", "nt", "qld", "sa", "tas", "va"), labels = c("ACT","NSW","NT","QLD","SA","TAS","VIC"))
+
+incmeans <- tapply(incomes, state_factor, mean)
+print(incmeans)
+```
+
+#5b
+```{r num 5b}
+#The results gives the average income for each state which is inside the "incmeans" vector. 
+```
+
+#6a
+```{r num 6a}
+#stdError <- function(x) sqrt(var(x)/length(x))
+#incster <- tapply(incomes, state_factor, stdError)
+```
+
+#6b
+```{r num 6b}
+#Some states have smaller standard errors (like NSW and ACT) have more precise and reliable mean incomes, while states with larger standard errors (such as QLD and NT) have less precise and reliable mean incomes due to greater variability in their samples.
+```
+
+#7a
+```{r num 7a}
+install.packages("titanic")
+library(titanic)
+data("titanic_train")
+titanic_data <- titanic_train
+
+
+Survived <- subset(titanic_data, Survived == 1)
+NotSurvived <- subset(titanic_data, Survived == 0)
+
+print(Survived)
+print(NotSurvived)
+
+```
+
+#8
+```{r num8}
+install.packages("readr")
+library(readr)
+breastcancer_wisconsin <- read_csv("/cloud/project/RWorksheet#6/breastcancer_wisconsin.csv")
+breastcancer_wisconsin
+```
+
+#8a
+```{r num 8a}
+#The dataset is a collection of information about breast cancer tumors reported by Dr. Wolberg. It includes details about tumor size, shape, and texture, provided chronologically as cases are diagnosed.
+```
+
+#9
+```{r num 9}
+install.packages("AppliedPredictiveModeling")
+library("AppliedPredictiveModeling")
+library(readr)
+abalone <- read_csv("/cloud/project/RWorksheet#6/abalone.csv")
+head(abalone)
+summary(abalone)
+```
