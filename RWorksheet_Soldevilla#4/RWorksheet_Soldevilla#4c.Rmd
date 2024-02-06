@@ -1,0 +1,323 @@
+---
+title: "RWorksheet_Soldevilla#4c.Rmd"
+author: "Ariane Soldevilla BSIT 2-B"
+date: "2023-11-28"
+output: pdf_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r }
+install.packages("ggplot2")
+install.packages("dplyr")
+install.packages("tidyverse")
+```
+
+#1
+
+#1a
+```{r num1a}
+# Show your solutions on how to import a csv file into the environment
+library(readr)
+mpg <- read_csv("mpg.csv")
+mpg
+
+```
+
+#1b
+```{r num1b}
+#  Which variables from mpg dataset are categorical?
+
+#The variables that are categorical in mpg dataset are manufacturer, model, trans, drv, and fl.
+
+```
+
+#1c
+```{r num1c}
+#Which are continuous variables?
+
+#The continuous variables in the mpg dataset are displ, year, cyl, cty, and hwy.
+```
+
+#2
+```{r num2}
+#Which manufacturer has the most models in this data set? Which model has the most variations? Show your answer.
+
+library(dplyr)
+manufacturer_most_models <- mpg %>%
+  group_by(manufacturer) %>%
+  summarize(number_of_models = n_distinct(model)) %>%
+  top_n(1, number_of_models)
+model_most_variations <- mpg %>%
+  group_by(model) %>%
+  summarize(number_of_variations = n_distinct(trans)) %>%
+  top_n(1, number_of_variations)
+cat("Manufacturer with the most models:", manufacturer_most_models$manufacturer, "\n")
+cat("Model with the most variations:", model_most_variations$model, "\n")
+
+```
+
+#2a
+```{r num 2a}
+#  Group the manufacturers and find the unique models. Show your codes and result.
+
+library(dplyr)
+unique_models_by_manufacturer <- mpg %>%
+  group_by(manufacturer) %>%
+  distinct(model)
+print(unique_models_by_manufacturer)
+
+
+```
+
+#2b
+```{r num 2b}
+# Graph the result by using plot() and ggplot(). Write the codes and its result.
+
+models_per_manufacturer <- table(mpg$manufacturer)
+
+#Using plot()
+plot(models_per_manufacturer, 
+     main = "Number of Models by Manufacturer",
+     xlab = "Manufacturer",
+     ylab = "Number of Models",
+     col = "yellow",
+     ylim = c(0, max(models_per_manufacturer) + 2))
+
+max_manufacturer <- which.max(models_per_manufacturer)
+text(max_manufacturer, models_per_manufacturer[max_manufacturer] + 1,
+     labels = paste("Max:", max(models_per_manufacturer)),
+     col = "blue", pos = 3)
+
+library(ggplot2)
+
+#Using ggplot2
+ggplot(data = as.data.frame(models_per_manufacturer), aes(x = Var1, y = Freq)) +
+  geom_bar(stat = "identity", fill = "yellow") +
+  labs(title = "Number of Models by Manufacturer",
+       x = "Manufacturer",
+       y = "Number of Models") +
+  geom_text(aes(label = Freq), vjust = -0.3, col = "blue", size = 3) +
+  theme_minimal()
+
+```
+
+#2aa
+```{r num 2aa} 
+# Same dataset will be used. You are going to show the relationship of the model and the manufacturer.
+
+library(ggplot2)
+ggplot(mpg, aes(model, manufacturer)) + 
+  geom_point()
+```
+
+#2bb
+```{r num 2bb}
+# The plot might not be very informative because it's attempting to create a scatter plot using categorical variables for both the x and y axes. Scatter plots are typically more suited for continuous variables.
+
+#Tallying Data
+library(ggplot2)
+ggplot(mpg, aes(model, fill = manufacturer)) + 
+  geom_bar(position = "dodge") +
+  theme(axis.text.x = element_text(angle = 45, hjust = 1))
+```
+
+#3
+```{r num3}
+#Plot the model and the year using ggplot(). Use only the top 20 observations. Write the codes and its results.
+
+library(ggplot2)
+top_20 <- head(mpg, 20)
+ggplot(top_20, aes(model, year)) + 
+  geom_point() +
+  theme(axis.text.x = element_text(angle = 45, hjust = 1)) 
+```
+
+#4
+```{r num4}
+# Using the pipe (%>%), group the model and get the number of cars per model. Show codes and its result
+
+library(dplyr)
+car_counts <- mpg %>%
+  group_by(model) %>%
+  summarize(number_of_cars = n())
+print(car_counts)
+
+```
+
+#4a
+```{r num 4a}
+# a. Plot using geom_bar() using the top 20 observations only. The graphs should have a title, labels and colors. Show code and results.
+
+library(ggplot2)
+top_20 <- head(mpg, 20)
+ggplot(top_20, aes(x = model, fill = factor(model))) +
+  geom_bar() +
+  labs(title = "Number of Cars by Model (Top 20 Observations)",
+       x = "Car Model",
+       y = "Number of Cars") +
+  scale_fill_discrete(name = "Car Model") +  
+  theme(axis.text.x = element_text(angle = 45, hjust = 1))  
+ 
+```
+
+#4b
+```{r num 4b}
+# Plot using the geom_bar() + coord_flip() just like what is shown below. Show codes and its result.
+
+library(ggplot2)
+top_20 <- head(mpg, 20)
+ggplot(top_20, aes(x = model, fill = factor(model))) +
+  geom_bar() +
+  labs(title = "Number of Cars by Model (Top 20 Observations)",
+       x = "Number of Cars",
+       y = "Car Model") +
+  scale_fill_discrete(name = "Car Model") +  
+  coord_flip() 
+```
+
+#5
+```{r num 5}
+# Plot the relationship between cyl - number of cylinders and displ - engine displacement using geom_point with aesthetic color = engine displacement. Title should be “Relationship between No. of Cylinders and Engine Displacement”.
+
+library(ggplot2)
+ggplot(mpg, aes(x = cyl, y = displ, color = displ)) +
+  geom_point() +
+  labs(title = "Relationship between No. of Cylinders and Engine Displacement",
+       x = "Number of Cylinders",
+       y = "Engine Displacement") +
+  scale_color_continuous(name = "Engine Displacement")  
+```
+
+#5a
+```{r num 5a}
+# How would you describe its relationship? Show the codes and its result.
+
+library(ggplot2)
+ggplot(mpg, aes(x = cyl, y = displ, color = displ)) +
+  geom_point() +
+  labs(title = "Relationship between No. of Cylinders and Engine Displacement",
+       x = "Number of Cylinders",
+       y = "Engine Displacement") +
+  scale_color_continuous(name = "Engine Displacement")
+
+```
+
+#6
+```{r num 6}
+# Plot the relationship between displ (engine displacement) and hwy(highway miles per gallon). Mapped it with a continuous variable you have identified in #1-c. What is its result? Why it produced such output?
+
+library(ggplot2)
+continuous_variable <- mpg$your_continuous_variable
+ggplot(mpg, aes(x = displ, y = hwy, color = continuous_variable)) +
+  geom_point() +
+  labs(title = "Relationship between Engine Displacement and Highway MPG",
+       x = "Engine Displacement",
+       y = "Highway MPG") +
+  scale_color_continuous(name = "Your Continuous Variable")  
+
+```
+
+#6.1
+```{r num 6.1}
+library(readr)
+traffic <- read_csv("traffic.csv",show_col_types = FALSE)
+traffic
+```
+
+#6a
+```{r num 6a}
+observations <- nrow(traffic)
+observations
+
+columns <- ncol(traffic)
+columns
+```
+
+#6b
+```{r num 6b}
+junction1 <- subset(traffic, Junction ==1)
+junction1
+
+junction2 <- subset(traffic, Junction ==2)
+junction2
+
+junction3 <- subset(traffic, Junction ==3)
+junction3
+
+junction4 <- subset(traffic, Junction ==4)
+junction4
+```
+
+#6c
+```{r num 6c}
+# Assuming 'traffic' is your dataset
+library(ggplot2)
+
+# Plot each junction using geom_line()
+ggplot(traffic, aes(x = seq_along(Junction), y = DateTime, group = Junction, color = factor(Junction))) +
+  geom_line() +
+  labs(title = "Plots in each Junction",
+       x = "Observation",
+       y = "Date&Time") +
+  scale_color_discrete(name = "Junction")
+```
+
+#7
+```{r num 7}
+#install.packages("readxl")
+library(readxl)
+alexafile <- read_excel("alexa_file.xlsx")
+alexafile
+```
+
+#7a
+```{r num 7a}
+num_rows <- nrow(alexafile)
+num_columns <- ncol(alexafile)
+num_rows
+num_columns
+```
+
+#7b
+```{r num 7b}
+library(dplyr)
+
+output <- alexafile %>%
+  group_by(variation) %>%
+  summarize(total_count = n())
+
+print(output)
+```
+
+#7c
+```{r num 7c}
+library(ggplot2)
+
+ggplot(alexafile, aes(x = variation)) +
+  geom_bar() +
+  labs(title = "Distribution of Variations", x = "Variation", y = "Count") +
+  theme_minimal()
+
+```
+
+#7d
+```{r num 7d}
+ggplot(alexafile, aes(x = date, y= rating)) + 
+  geom_line(color= "darkseagreen") +
+  labs (title = "Date and the number of verified reviews",
+        x = "Date",
+        y = "Rating")
+```
+
+#7e
+```{r num 7e}
+ggplot(alexafile, aes(x = variation, y = rating)) +
+  geom_boxplot(fill = "coral", color = "slategray") +
+  labs(title = "Relationship Between Variations and Ratings",
+       x = "Variations",
+       y = "Ratings") +
+  theme(axis.text.x = element_text(angle = 45, hjust = 1)) 
+```

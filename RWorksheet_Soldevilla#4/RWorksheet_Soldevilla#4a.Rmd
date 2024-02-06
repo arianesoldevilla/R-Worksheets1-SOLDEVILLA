@@ -1,0 +1,166 @@
+---
+title: "RWorksheet_Soldevilla#4a"
+author: "Ariane Soldevilla"
+date: "2023-10-25"
+output: pdf_document
+---
+
+#1 
+``` {r number1}
+df <- data.frame (
+  Shoe_size = c(6.5, 9.0, 8.5, 8.5, 10.0, 7.0, 9.5, 9.0, 13.0, 7.5, 10.5, 8.5, 12.0, 10.5, 13.0, 11.5, 8.5, 5.0, 10.0, 6.5, 7.5, 8.5, 10.5, 8.5, 10.5, 11.0, 9.0, 13.0), 
+  Height = c(66.0, 68.0, 64.5, 65.0, 70.0, 64.0, 70.0, 71.0, 72.0, 64.0, 74.5, 67.0, 71.0, 71.0, 77.0, 72.0, 59.0, 62.0, 72.0, 66.0, 64.0, 67.0, 73.0, 69.0, 72.0, 70.0, 69.0, 70.0),
+  Gender = c("F", "F", "F", "F", "M", "F", "F", "F", "M", "F", "M",
+             "F", "M", "M", "M", "M", "F", "F", "M", "F", "F", "M", "M", "F", "M", "M", "M", "M")
+)
+df
+```
+#B
+``` {r number1b}
+male_subset <- df[df$Gender == "M", c("Shoe_size", "Height")]
+female_subset <- df[df$Gender == "F", c("Shoe_size", "Height")]
+male_subset
+female_subset
+```
+#c
+``` {r number1c}
+mean(df$Shoe_size)
+mean(df$Height)
+```
+#d
+#Yes, there is a relationship between the height and shoe size, the taller they are, the longer their shoe size.
+
+#Number2
+``` {r number2}
+months <- c("March","April","January","November","January",
+"September","October","September","November","August",
+"January","November","November","February","May","August",
+"July","December","August","August","September","November","February", "April")
+factor_months <- factor(months)
+factor_months
+```
+#3
+``` {r number3}
+summary(months)
+summary(factor_months)
+```
+#4
+``` {r number4}
+direction_vector <- c("East", "West", "North")
+frequency_vector <- c(1, 1, 3)
+factor_data <- factor(c(direction_vector, frequency_vector))
+new_order_data <- factor(factor_data,levels = 
+                c("East", "West", "North"))
+print(new_order_data)
+```
+#5
+``` {r number5}
+student_table <- read.table(file = 'import_march.csv', header = TRUE, sep = ',')
+student_table
+
+```
+
+#6.
+``` {r num6}
+random_number <- sample(1:50, 1)
+
+cat("The chosen number is:", random_number, "\n")
+
+if (random_number == 20) {
+  cat("TRUE\n")
+} else if (random_number < 1 || random_number > 50) {
+  cat("The number selected is beyond the range of 1 to 50\n")
+} else {
+  cat(random_number, "\n")
+}
+```
+#7.
+``` {r num7}
+calculate_min_bills <- function(price_of_snack) {
+  bill_denominations <- c(1000, 500, 200, 100, 50)
+  total_bills <- 0
+  
+  for (bill in bill_denominations) {
+    num_bills_needed <- price_of_snack %/% bill
+    price_of_snack <- price_of_snack %% bill
+    total_bills <- total_bills + num_bills_needed
+  }
+  
+  cat("Minimum number of bills needed to purchase the snack:", total_bills, "\n")
+}
+
+price_of_snack <- 1350
+calculate_min_bills(price_of_snack)
+```
+#8.
+#A.
+``` {r num8a}
+students <- data.frame(
+  Name = c("Annie" , "Thea", "Steve", "Hanna"),
+  Grade1 = c(85,65,75,95),
+  Grade2 = c(65,75,55,75),
+  Grade3 = c(85,90,80,100),
+  Grade4 = c(100,90,85,90)
+)
+students
+```
+#B.
+``` {r num8b}
+students$Average <- (students$Grade1 + students$Grade2 + students$Grade3 + students$Grade4) / 4
+
+for (i in 1:nrow(students)) {
+  average <- (students$Grade1[i] + students$Grade2[i] + students$Grade3[i] + students$Grade4[i]) / 4
+  count <- 0
+  total_average <- 0
+  if (students$Grade4[i] > 90) {
+    cat(students$Name[i], "'s average grade this semester is", average, ".\n")
+    total_average <- total_average + average
+    count <- count + 1
+  }
+}
+
+if (count > 0) {
+  overall_average <- total_average / count
+  cat("The overall average for high-achieving students is", overall_average, ".\n")
+} else {
+  cat("No high-achieving students found.\n")
+}
+```
+#C.
+``` {r num8c}
+test1_average <- sum(students$Grade1) / nrow(students)
+test2_average <- sum(students$Grade2) / nrow(students)
+test3_average <- sum(students$Grade3) / nrow(students)
+test4_average <- sum(students$Grade4) / nrow(students)
+
+if (test1_average < 80) {
+  cat("The 1st test was difficult.\n")
+}
+if (test2_average < 80) {
+  cat("The 2nd test was difficult.\n")
+}
+if (test3_average < 80) {
+  cat("The 3rd test was difficult.\n")
+}
+if (test4_average < 80) {
+  cat("The 4th test was difficult.\n")
+}
+```
+#D.
+``` {r num8d}
+for (i in 1:nrow(students)) {
+  highest_grade <- students$Grade1[i]
+  if (students$Grade2[i] > highest_grade) {
+    highest_grade <- students$Grade2[i]
+  }
+  if (students$Grade3[i] > highest_grade) {
+    highest_grade <- students$Grade3[i]
+  }
+  if (students$Grade4[i] > highest_grade) {
+    highest_grade <- students$Grade4[i]
+  }
+  if (highest_grade > 90) {
+    cat(students$Name[i], "'s highest grade this semester is", highest_grade, "\n")
+  }
+}
+```

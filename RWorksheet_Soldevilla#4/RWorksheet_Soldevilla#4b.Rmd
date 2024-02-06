@@ -1,0 +1,276 @@
+---
+title: "RWorksheet_Soldevilla#4b.Rmd"
+author: "Ariane Soldevilla"
+date: "2023-11-08"
+output: pdf_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+#1
+```{r 1}
+vectorA <- c(1, 2, 3, 4, 5)
+matrixA <- matrix(0, nrow = 5, ncol = 5)
+
+for (i in 1:5) {
+  for (j in 1:5) {
+    matrixA[i, j] <- abs(vectorA[i] - vectorA[j])
+  }
+}
+
+matrixA
+
+```
+
+#2
+```{r 2}
+num_rows <- 5
+
+for(i in 1:num_rows){
+  for(j in 1:i){
+    cat("*")
+  }
+  cat("\n")
+}
+```
+
+#3
+```{r 3}
+input.number <- as.numeric(readline("Enter a number to start the Fibonacci sequence: "))
+assume.number <- 0
+x <- 0
+y <- 1
+repeat {
+  if (x > 500) {
+    break
+  }
+  if (x >= assume.number) {
+    cat(x, " ")
+  }
+  temp <- x + y
+  x <- y
+  y <- temp
+}
+cat("\n")
+
+```
+
+#4
+``` {r num4}
+library(readr)
+shoes <- read_csv("/cloud/project/RWorksheet_Soldevilla#4/shoes.csv",
+                  show_col_types = FALSE)
+shoes
+
+```
+
+``` {r num4a}
+shoes <-  read.csv("shoes.csv")
+shoes
+ssize <- shoes[c(1:6),]
+ssize
+```
+
+``` {r num4b}
+male_subset <- shoes[shoes$Gender == "M", c("Shoe.Size", "Height")]
+female_subset <- shoes[shoes$Gender == "F", c("Shoe.Size", "Height")]
+male_subset
+female_subset
+```
+
+
+```{r num4c}
+GraphMF<- table(shoes$Gender)
+barplot(GraphMF,
+        main = "Number of Males and Females",
+        xlab = "Gender",
+        ylab = "Count",
+        col = c("plum", "gray"),
+        legend.text = c("Male", "Female"),
+        beside = TRUE
+)
+```
+
+#5
+
+```{r num5a}
+pie_chart <- c(60, 10, 5, 25)
+pie(pie_chart, labels = paste0(pie_chart, "%"),
+    main = "Monthly Income of Dela Cruz family ", col = rainbow(length(pie_chart)))
+
+legend("topleft", legend = c("Food", "Electricity", "Savings", "Miscellaneous"),
+       fill = rainbow(length(pie_chart)))
+```
+
+#6
+```{r num6a}
+data("iris")
+str(iris)
+#It has 150 observations and 5 variables.
+```
+
+```{r num 6b}
+meanIris<- colMeans(iris[, c("Sepal.Length", "Sepal.Width", "Petal.Length", "Petal.Width")])
+print(meanIris)
+```
+
+```{r num6c}
+specs <- table(iris$Species)
+
+clors <- c("salmon", "cyan", "yellow")
+
+pie(specs,
+    labels = paste(names(specs), "\n", sprintf("%.1f%%", prop.table(specs) * 100)),
+    col = clors,
+    main = "Species Distribution",
+    cex.main = 1.5,
+    cex = 0.8      
+)
+```
+
+```{r num6d}
+SetSub <- subset(iris, Species == "setosa")
+VersiSub <- subset(iris, Species == "versicolor")
+VirgiSub <- subset(iris, Species == "virginica")
+
+# Display the last six rows of each species
+cat("Last six rows of Setosa:")
+print(tail(SetSub))
+
+cat("Last six rows of Versicolor:")
+print(tail(VersiSub))
+
+cat("Last six rows of Virginica:")
+print(tail(VirgiSub))
+```
+
+``` {r num6e}
+
+data(iris)
+
+iris$Species <- as.factor(iris$Species)
+
+plot(iris$Sepal.Length, iris$Sepal.Width,
+     pch = as.integer(iris$Species),
+     col = iris$Species,
+     main = "Iris Dataset",
+     sub = "Sepal width and length",
+     xlab = "Sepal Length",
+     ylab = "Sepal Width"
+)
+```
+
+``` {r num6f}
+#The scatterplot shows similarities between the sepal width and length ranging from 5.5 to 7.0.
+```
+
+```{r num7}
+library(readxl)
+alexa_file <- read_excel("alexa_file.xlsx")
+alexa_file
+```
+```{r number7a}
+
+# Remove extra whitespaces in black variants
+alexa_file$variation <- gsub("\\s+", " ", alexa_file$variation)
+alexa_file$variation <- gsub("Black ", "Black", alexa_file$variation)
+
+# Remove extra whitespaces in white variants
+alexa_file$variation <- gsub("\\s+", " ", alexa_file$variation)
+alexa_file$variation <- gsub("White ", "White", alexa_file$variation)
+```
+
+```{r number7b}
+# Install and load the dplyr package
+if (!require(dplyr)) {
+  install.packages("dplyr")
+}
+library(dplyr)
+
+
+
+# Group by Variation and calculate the total count
+variation_counts <- alexa_file %>%
+  group_by(variation) %>%
+  summarise(Count = n())
+
+# Save the object as variations.RData
+save(variation_counts, file = "variations.RData")
+
+
+variation_counts
+```
+
+```{r number7c}
+# Load the variations.RData file
+load("variations.RData")
+
+# Increase the size of the plot
+par(mar = c(5, 5, 4, 2) + 0.1)  # Adjust the margins
+
+# Create a barplot with rotated x-axis labels
+barplot(variation_counts$Count, 
+        names.arg = variation_counts$variation,
+        col = rainbow(length(variation_counts$variation)),
+        main = "Variation Counts",
+        xlab = "Variation",
+        ylab = "Count",
+        las = 2,      # Rotate x-axis labels 90 degrees
+        cex.names = 0.8,  # Adjust the size of the x-axis labels
+        width = 0.8)  # Adjust the width of the bars
+
+# Manually add legend in topright
+legend_labels <- variation_counts$variation
+legend_colors <- rainbow(length(legend_labels))
+
+for (i in seq_along(legend_labels)) {
+  rect(max(par("usr")[1]) + 0.1,
+       max(par("usr")[3]) - i * 0.5,
+       max(par("usr")[1]) + 0.3,
+       max(par("usr")[3]) - (i + 1) * 0.5,
+       col = legend_colors[i])
+  
+  text(max(par("usr")[1]) + 0.4,
+       max(par("usr")[3]) - i * 0.5,
+       labels = legend_labels[i],
+       pos = 4,
+       offset = 0.2,
+       cex = 0.8)
+}
+```
+
+```{r number7d}
+# Load the variations.RData file
+load("variations.RData")
+
+# Extract data for black and white variations
+black_variations <- variation_counts[variation_counts$variation %in% c("Black", "BlackDot", "BlackPlus", "BlackShow", "BlackSpot"), ]
+white_variations <- variation_counts[variation_counts$variation %in% c("White", "WhiteDot", "WhitePlus", "WhiteShow", "WhiteSpot"), ]
+
+# Set up the plotting area
+par(mfrow = c(1, 2))  # 1 row, 2 columns
+
+# Barplot for black variations
+barplot(black_variations$Count, 
+        names.arg = black_variations$variation,
+        col = rainbow(length(black_variations$variation)),
+        main = "Black Variations",
+        xlab = "Variation",
+        ylab = "Count",
+        las = 2,  
+        cex.names = 0.8,  
+        width = 0.8)  
+
+# Barplot for white variations
+barplot(white_variations$Count, 
+        names.arg = white_variations$variation,
+        col = rainbow(length(white_variations$variation)),
+        main = "White Variations",
+        xlab = "Variation",
+        ylab = "Count",
+        las = 2,  
+        cex.names = 0.8, 
+        width = 0.8)  
+```
